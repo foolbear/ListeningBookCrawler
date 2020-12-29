@@ -54,7 +54,7 @@ FoolMBP:~ foolbear$ python ~/Listening/Script/BookCrawlerBQG.py -u https://m.biq
 
 ### 文本文件
 对于文本文件，这里提供了一个示例：  
-BookCrawlerText.py
+* BookCrawlerText.py
 
 使用方法是：  
 ```shell
@@ -80,9 +80,15 @@ FoolMBP:~ foolbear$ python ~/Listening/Script/BookCrawlerText.py -i ~/Downloads/
     ...
 ```
 
-使用前有几点注意：  
-1. 为了编码正确，将文本文件用 Chrome 浏览器打开，并拷贝其中的内容回文本文件并保存。
-2. 为了符合上面的格式，推荐使用类似 Sublime Text 等工具进行格式化，善用 replace 就能完成很多的工作。 
+为了使用简单，请注意：  
+1. 第一行书名，第二行作者。一定填充内容，就算不知道，请注为“-”。
+2. 章节名前添加一行空行。
+3. 章节名前没有空格。
+4. 章节内容的每行前添加四个空格。
+
+使用前还有几点注意：  
+1. 为了编码（utf-8）正确，简单的方法是：将文本文件用 Chrome 浏览器打开，并拷贝其中的内容回文本文件并保存。
+2. 为了符合上面的格式，推荐使用类似 Sublime Text 等工具进行格式化，善用 replace 就能完成很多的工作。
 
 ### 使用技巧
 在使用这里的工具时，可以先加上 “-m 3” 的参数，观察三个章节的输出格式是否满意。满意之后，去掉该参数，输出所有章节。
