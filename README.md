@@ -1,11 +1,11 @@
 # ListeningBookCrawler
 
 ## 目的
-这个项目的目的是为了生成符合“大笨熊听书” App 需要格式化的 “Foolbear Listening Book Package”而提供的 python 示例。您也可以使用其他语言和工具，只要生成“Foolbear Listening Book Package”即可。
+这个项目的目的是为了生成符合 **“大笨熊听书”**  App 需要格式化的 **“Foolbear Listening Book Package”** 而提供的 python 示例。您也可以使用其他语言和工具，只要生成“Foolbear Listening Book Package”即可。
 
-## “Foolbear Listening Book Package ” 
-这个格式是一个 Json 文件，其后缀是“.flbp”。该文件可以通过类似 AirDrop 等方法导入到“大笨熊听书” App中，即可听书。
-其格式如下：
+## Foolbear Listening Book Package
+这个格式是一个 Json 文件，其后缀是 **“.flbp”** 。该文件可以通过类似 AirDrop 等方法导入到 **“大笨熊听书”**  App中，即可听书。
+其格式如下：  
 ```json
 {
     "sourceUrl": "https://m.biqubu.com/book_202/", 
@@ -39,30 +39,30 @@
 安装 python，安装相关模块：getopt、user_agent、json。
 
 ### 追书网站
-对于各大追书网站，这里提供了两个示例：
-BookCrawlerBQG.py:  笔趣阁（https://m.biqubu.com/）
-BookCrawlerYQHY.py: 言情花园（https://k.yqhy.org）
+对于各大追书网站，这里提供了两个示例：  
+* BookCrawlerBQG.py:  笔趣阁（https://m.biqubu.com/）
+* BookCrawlerYQHY.py: 言情花园（https://k.yqhy.org）
 
-使用方法是：
+使用方法是：  
 ```shell
 FoolMBP:~ foolbear$ python ~/Listening/Script/BookCrawlerBQG.py --help
 FoolMBP:~ foolbear$ python ~/Listening/Script/BookCrawlerBQG.py -u https://m.biqubu.com/book_202/ -o ~/Downloads/ -m 3
 ```
 
-对于这两个网站，基本上可以直接使用即可。您也可以根据具体书籍格式（空行数不同，段首空格不同）做些微调。
+对于这两个网站，基本上可以直接使用即可。您也可以根据具体书籍格式（空行数不同，段首空格不同）做些微调。  
 对于其他追书网站，也可以在这两个示例的基础上修改，这可能需要您稍微了解下 python 的编程（很简单，我也是现学的，可能够用不够好）。
 
 ### 文本文件
-对于文本文件，这里提供了一个示例：
+对于文本文件，这里提供了一个示例：  
 BookCrawlerText.py
 
-使用方法是：
+使用方法是：  
 ```shell
 FoolMBP:~ foolbear$ python ~/Listening/Script/BookCrawlerText.py --help
 FoolMBP:~ foolbear$ python ~/Listening/Script/BookCrawlerText.py -i ~/Downloads/杨小邪发威.txt -o ~/Downloads/ -m 3
 ```
 
-它所支持的格式如下：
+它所支持的格式如下：  
 ```text
 杨小邪发威
 李凉
@@ -80,13 +80,13 @@ FoolMBP:~ foolbear$ python ~/Listening/Script/BookCrawlerText.py -i ~/Downloads/
     ...
 ```
 
-使用前有几点注意：
+使用前有几点注意：  
 1. 为了编码正确，将文本文件用 Chrome 浏览器打开，并拷贝其中的内容回文本文件并保存。
 2. 为了符合上面的格式，推荐使用类似 Sublime Text 等工具进行格式化，善用 replace 就能完成很多的工作。 
 
 ### 使用技巧
 在使用这里的工具时，可以先加上 “-m 3” 的参数，观察三个章节的输出格式是否满意。满意之后，去掉该参数，输出所有章节。
 
-## 联系我（[foolbear@foolbear.com](mailto:foolbear@foolbear.com)）
-如果有朋友想一起完善这个项目，类似提供不同追书网站的支持，也可以联系我加入项目。
+## 联系我（foolbear@foolbear.com）
+如果有朋友想一起完善这个项目，类似提供不同追书网站的支持，也可以联系我加入项目。  
 如果有朋友玩不来 python，需要请求书籍或其他支持，也可以联系我，或者直接提交 Issue 让大家一起帮助您。
