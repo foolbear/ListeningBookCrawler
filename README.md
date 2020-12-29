@@ -5,7 +5,7 @@
 
 ## Foolbear Listening Book Package
 这个格式是一个 Json 文件，其后缀是 **“.flbp”** 。该文件可以通过类似 AirDrop 等方法导入到 **“大笨熊听书”**  App中，即可听书。
-其格式如下：  
+其格式如下（[示例](https://github.com/foolbear/ListeningBookCrawler/blob/main/%E6%9D%A8%E5%B0%8F%E9%82%AA%E5%8F%91%E5%A8%81.flbp)）：  
 ```json
 {
     "sourceUrl": "https://m.biqubu.com/book_202/", 
@@ -62,7 +62,7 @@ FoolMBP:~ foolbear$ python ~/Listening/Script/BookCrawlerText.py --help
 FoolMBP:~ foolbear$ python ~/Listening/Script/BookCrawlerText.py -i ~/Downloads/杨小邪发威.txt -o ~/Downloads/ -m 3
 ```
 
-它所支持的格式如下：  
+它所支持的格式如下（[示例](https://github.com/foolbear/ListeningBookCrawler/blob/main/%E6%9D%A8%E5%B0%8F%E9%82%AA%E5%8F%91%E5%A8%81.txt)）：  
 ```text
 杨小邪发威
 李凉
