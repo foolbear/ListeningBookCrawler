@@ -4,7 +4,7 @@ import os
 import sys
 from bs4 import BeautifulSoup
 
-from BookCrawlerDefine import Book, Chapter, write2Text, write2FLBP
+from BookCrawlerDefine import Book, Chapter, write2FLBP
 from BookCrawlerWeb import Param, parseCommandLine, request
 
 reload(sys)
@@ -83,18 +83,10 @@ if __name__ == '__main__':
     param.bookUrl = 'https://k.yqhy.org/read/1/1302/'
 #    param.bookUrl = 'https://k.yqhy.org/read/62/62978/'
     param.outputpath = './'
-    param.outputFormat = 'flbp'
     param.maxChapters = 2000000
     param.sourceName = '言情花园'
     param.baseUrl = 'https://k.yqhy.org'
     
     param = parseCommandLine(param)
     book = getBook(param)
-    
-    if param.outputFormat == 'text':
-        write2Text(book, param)
-    elif param.outputFormat == 'flbp':
-        write2FLBP(book, param)
-    else:
-        write2Text(book, param)
-        write2FLBP(book, param)
+    write2FLBP(book, param)

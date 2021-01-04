@@ -22,16 +22,6 @@ class Chapter:
         self.content = ''
         self.name = ''
         self.sourceUrl = ''
-        
-def write2Text(book, param):
-    path = param.outputPath + book.name + text_postfix
-    file = open(path, 'w')
-    file.write(book.name + '\n' + book.author + '\nfrom ' + book.sourceUrl + '\n\n')
-    for chapter in book.chapters:
-        content = chapter.name + '\n\n' + chapter.content + '\n\n'
-        file.write(content)
-    file.close()
-    print('write2Text Success, output file: %s' %(path))
 
 def write2FLBP(book, param):
     path = param.outputPath + book.name + flbp_postfix

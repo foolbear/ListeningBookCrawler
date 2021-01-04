@@ -11,17 +11,16 @@ class Param:
     def __init__(self):
         self.bookUrl = ''
         self.outputPath = './'
-        self.outputFormat = 'flbp'
         self.maxChapters = 2000000
         self.sourceName = ''
         self.baseUrl = ''
 
 def parseCommandLine(defaultParam):
     param = defaultParam
-    usage = 'Usage: %s -u <url> -o <outputpath> -f <both|text|flbp> -m <maxchapters>' %(sys.argv[0])
+    usage = 'Usage: %s -u <url> -o <outputpath> -m <maxchapters>' %(sys.argv[0])
     
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'hu:o:f:m:', ['help', 'url=', 'opath=', 'format=', 'max='])
+        opts, args = getopt.getopt(sys.argv[1:], 'hu:o:m:', ['help', 'url=', 'opath=', 'max='])
     except getopt.GetoptError:
         print(usage)
         sys.exit(2)
@@ -33,11 +32,9 @@ def parseCommandLine(defaultParam):
             param.bookUrl = value
         elif key in ('-o', '--opath'):
             param.outputPath = value
-        elif key in ('-f', '--format'):
-            param.outpuFormat = value
         elif key in ('-m', '--max'):
             param.maxChapters = int(value)
-    print('request book from %s(%s), outputPath=%s, outputFormat=%s, maxChapters=%d' %(param.sourceName, param.bookUrl, param.outputPath, param.outputFormat, param.maxChapters))
+    print('request book from %s(%s), outputPath=%s, maxChapters=%d' %(param.sourceName, param.bookUrl, param.outputPath, param.maxChapters))
     return param
 
 def request(url):
