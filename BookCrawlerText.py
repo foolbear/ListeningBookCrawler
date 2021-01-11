@@ -25,8 +25,9 @@ def getBook(param):
     
     chapterIndex = 0
     line = ifile.readline()
+    prefixOfContentLine = '        '
     while line and chapterIndex < param.maxChapters:
-        if line.strip() != '' and line.find('    ') != 0:
+        if line.strip() != '' and line.find(prefixOfContentLine) != 0:
             chapter = Chapter()
             chapter.sourceUrl = ''
             chapter.name = line.strip()
@@ -36,10 +37,10 @@ def getBook(param):
             
             content = ''
             line = ifile.readline()
-            while line and (line.strip() == '' or line.find('    ') == 0):
+            while line and (line.strip() == '' or line.find(prefixOfContentLine) == 0):
                 content += line
                 line = ifile.readline()
-            chapter.content = '    ' + content.strip()
+            chapter.content = prefixOfContentLine + content.strip()
             book.chapters.append(chapter)
         else:
             line = ifile.readline()
