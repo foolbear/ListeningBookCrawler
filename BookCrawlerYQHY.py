@@ -23,6 +23,7 @@ def getChapter(url, index, param):
     chapter.name = title
     chapter.content = content
     chapter.index = index
+    chapter.size = len(content)
     chapters.append(chapter)
     print('\tchapter %04d: %s' %(chapter.index, title.strip()))
 

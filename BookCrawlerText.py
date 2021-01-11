@@ -41,6 +41,7 @@ def getBook(param):
                 content += line
                 line = ifile.readline()
             chapter.content = prefixOfContentLine + content.strip()
+            chapter.size = len(chapter.content)
             book.chapters.append(chapter)
         else:
             line = ifile.readline()

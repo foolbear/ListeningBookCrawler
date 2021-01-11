@@ -22,6 +22,7 @@ class Chapter:
         self.content = ''
         self.name = ''
         self.sourceUrl = ''
+        self.size = 0
 
 def write2FLBP(book, param):
     path = param.outputPath + book.name + flbp_postfix

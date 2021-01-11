@@ -21,6 +21,7 @@ def getChapter(url, index):
     chapter.name = title
     chapter.content = content
     chapter.index = index
+    chapter.size = len(content)
     print('\tchapter %04d: %s' %(chapter.index, title.strip()))
     return chapter
 
