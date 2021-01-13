@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import json
 import getopt
 import requests
 from user_agent import generate_user_agent
@@ -11,16 +12,17 @@ class Param:
     def __init__(self):
         self.bookUrl = ''
         self.outputPath = './'
+        self.start = 0
         self.maxChapters = 2000000
         self.sourceName = ''
         self.baseUrl = ''
 
 def parseCommandLine(defaultParam):
     param = defaultParam
-    usage = 'Usage: %s -u <url> -o <outputpath> -m <maxchapters>' %(sys.argv[0])
+    usage = 'Usage: %s -u <url> -o <outputpath> -s <start> -m <maxchapters>' %(sys.argv[0])
     
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'hu:o:m:', ['help', 'url=', 'opath=', 'max='])
+        opts, args = getopt.getopt(sys.argv[1:], 'hu:o:s:m:', ['help', 'url=', 'opath=', 'start=', 'max='])
     except getopt.GetoptError:
         print(usage)
         sys.exit(2)
@@ -32,10 +34,18 @@ def parseCommandLine(defaultParam):
             param.bookUrl = value
         elif key in ('-o', '--opath'):
             param.outputPath = value
+        elif key in ('-s', '--start'):
+            param.start = value
         elif key in ('-m', '--max'):
             param.maxChapters = int(value)
-    print('request book from %s(%s), outputPath=%s, maxChapters=%d' %(param.sourceName, param.bookUrl, param.outputPath, param.maxChapters))
+    print('request book from %s(%s), outputPath=%s, start=%d, maxChapters=%d' %(param.sourceName, param.bookUrl, param.outputPath, param.start, param.maxChapters))
     return param
+    
+def write2FLBP(book, param):
+    path = param.outputPath + book.name + '_s' + param.start + '_m' + param.maxchapters + flbp_postfix
+    file = open(path, 'w')
+    json.dump(obj = book, fp = file, encoding = 'UTF-8', ensure_ascii = False, default = lambda x : x.__dict__, sort_keys = False, indent = 4)
+    print('write2FLBP success, output file: %s' %(path))
 
 def request(url):
     userAgent = generate_user_agent()

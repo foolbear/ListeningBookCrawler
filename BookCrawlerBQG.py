@@ -50,14 +50,17 @@ def getBook(param):
     
     chapterIndex = 0
     page_url = param.bookUrl
-    while page_url != '' and chapterIndex < param.maxChapters:
+    while page_url != '' and param.start + chapterIndex < param.maxChapters:
         print('page: ' + page_url)
         req = request(url = page_url)
         soup = BeautifulSoup(req.text, 'html.parser')
         chapters = soup.find_all('ul', class_ = 'chapter')[1]
         for chapter in chapters.find_all('li'):
-            if chapterIndex >= param.maxChapters:
+            if chapterIndex >= param.start + param.maxChapters:
                 break
+            if chapterIndex < param.start:
+                chapterIndex += 1
+                continue
             chapter_url = param.baseUrl + chapter.a['href']
             chapter = getChapter(chapter_url, chapterIndex)
             book.chapters.append(chapter)
@@ -73,6 +76,7 @@ if __name__ == '__main__':
     param = Param()
     param.bookUrl = 'https://m.biqubu.com/book_20602/'
     param.outputpath = './'
+    param.start = 0
     param.maxChapters = 2000000
     param.sourceName = '笔趣阁'
     param.baseUrl = 'https://m.biqubu.com'

@@ -62,14 +62,17 @@ def getBook(param):
 
     chapterIndex = 0
     page_url = param.baseUrl + soup.find_all('a', class_ = 'tc')[0]['href']
-    while page_url != '' and chapterIndex < param.maxChapters:
+    while page_url != '' and param.start + chapterIndex < param.maxChapters:
         print('page: ' + page_url)
         req = request(url = page_url)
         soup = BeautifulSoup(req.text, 'html.parser')
         chapters = soup.find_all('ul', class_ = 'block list')[0]
         for chapter in chapters.find_all('li'):
-            if chapterIndex >= param.maxChapters:
+            if param.start + chapterIndex >= param.maxChapters:
                 break
+            if chapterIndex < param.start:
+                chapterIndex += 1
+                continue
             chapter_url = param.baseUrl + chapter.a['href']
             chapters = getChapter(chapter_url, chapterIndex, param)
             book.chapters += chapters
@@ -85,8 +88,8 @@ def getBook(param):
 if __name__ == '__main__':
     param = Param()
     param.bookUrl = 'https://k.yqhy.org/read/1/1302/'
-#    param.bookUrl = 'https://k.yqhy.org/read/62/62978/'
     param.outputpath = './'
+    param.start = 0
     param.maxChapters = 2000000
     param.sourceName = '言情花园'
     param.baseUrl = 'https://k.yqhy.org'
