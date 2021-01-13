@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-flbp_postfix = '.flbp'
+postfixOfFLBP = '.flbp'
 
 prefixOfContentLine = '        '
 separatorBetweenLines = '\n\n'

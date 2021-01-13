@@ -4,8 +4,8 @@ import os
 import sys
 from bs4 import BeautifulSoup
 
-from BookCrawlerDefine import Book, Chapter, write2FLBP, prefixOfContentLine, separatorBetweenLines
-from BookCrawlerWeb import Param, parseCommandLine, request
+from BookCrawlerDefine import Book, Chapter, prefixOfContentLine, separatorBetweenLines
+from BookCrawlerWeb import Param, parseCommandLine, request, write2FLBP
 
 reload(sys)
 sys.setdefaultencoding('utf8')

@@ -50,7 +50,7 @@ def getBook(param):
     
     chapterIndex = 0
     page_url = param.bookUrl
-    while page_url != '' and param.start + chapterIndex < param.maxChapters:
+    while page_url != '' and chapterIndex < param.start + param.maxChapters:
         print('page: ' + page_url)
         req = request(url = page_url)
         soup = BeautifulSoup(req.text, 'html.parser')
@@ -74,7 +74,7 @@ def getBook(param):
     
 if __name__ == '__main__':
     param = Param()
-    param.bookUrl = 'https://m.biqubu.com/book_20602/'
+    param.bookUrl = 'https://m.biqubu.com/book_202/'
     param.outputpath = './'
     param.start = 0
     param.maxChapters = 2000000

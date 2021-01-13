@@ -5,6 +5,7 @@ import json
 import getopt
 import requests
 from user_agent import generate_user_agent
+from BookCrawlerDefine import postfixOfFLBP
         
 request_timeout = 60
 
@@ -35,14 +36,14 @@ def parseCommandLine(defaultParam):
         elif key in ('-o', '--opath'):
             param.outputPath = value
         elif key in ('-s', '--start'):
-            param.start = value
+            param.start = int(value)
         elif key in ('-m', '--max'):
             param.maxChapters = int(value)
     print('request book from %s(%s), outputPath=%s, start=%d, maxChapters=%d' %(param.sourceName, param.bookUrl, param.outputPath, param.start, param.maxChapters))
     return param
     
 def write2FLBP(book, param):
-    path = param.outputPath + book.name + '_s' + param.start + '_m' + param.maxchapters + flbp_postfix
+    path = param.outputPath + book.name + '_s' + str(param.start) + '_m' + str(param.maxChapters) + postfixOfFLBP
     file = open(path, 'w')
     json.dump(obj = book, fp = file, encoding = 'UTF-8', ensure_ascii = False, default = lambda x : x.__dict__, sort_keys = False, indent = 4)
     print('write2FLBP success, output file: %s' %(path))

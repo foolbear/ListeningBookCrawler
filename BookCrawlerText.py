@@ -5,7 +5,7 @@ import sys
 import json
 import getopt
 
-from BookCrawlerDefine import Book, Chapter, write2FLBP, prefixOfContentLine, separatorBetweenLines
+from BookCrawlerDefine import Book, Chapter, postfixOfFLBP, prefixOfContentLine, separatorBetweenLines
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -79,7 +79,7 @@ def parseCommandLine(defaultParam):
     return param
 
 def write2FLBP(book, param):
-    path = param.outputPath + book.name + flbp_postfix
+    path = param.outputPath + book.name + postfixOfFLBP
     file = open(path, 'w')
     json.dump(obj = book, fp = file, encoding = 'UTF-8', ensure_ascii = False, default = lambda x : x.__dict__, sort_keys = False, indent = 4)
     print('write2FLBP success, output file: %s' %(path))
