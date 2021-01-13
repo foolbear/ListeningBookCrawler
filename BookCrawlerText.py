@@ -4,7 +4,7 @@ import os
 import sys
 import getopt
 
-from BookCrawlerDefine import Book, Chapter, write2FLBP
+from BookCrawlerDefine import Book, Chapter, write2FLBP, prefixOfContentLine, separatorBetweenLines
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -25,9 +25,8 @@ def getBook(param):
     
     chapterIndex = 0
     line = ifile.readline()
-    prefixOfContentLine = '        '
     while line and chapterIndex < param.maxChapters:
-        if line.strip() != '' and line.find(prefixOfContentLine) != 0:
+        if line.strip() != '' and line.startsWith('  ') == False:
             chapter = Chapter()
             chapter.sourceUrl = ''
             chapter.name = line.strip()
@@ -37,10 +36,11 @@ def getBook(param):
             
             content = ''
             line = ifile.readline()
-            while line and (line.strip() == '' or line.find(prefixOfContentLine) == 0):
-                content += line
+            while line and (line.strip() == '' or line.startsWith('  ') == True):
+                if line.strip() != '':
+                    content += prefixOfContentLine + line.strip() + separatorBetweenLines
                 line = ifile.readline()
-            chapter.content = prefixOfContentLine + content.strip()
+            chapter.content = content
             chapter.size = len(chapter.content)
             book.chapters.append(chapter)
         else:

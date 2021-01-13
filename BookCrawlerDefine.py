@@ -3,7 +3,9 @@
 import json
 
 flbp_postfix = '.flbp'
-text_postfix = '.txt'
+
+prefixOfContentLine = '        '
+separatorBetweenLines = '\n\n'
 
 class Book:
     def __init__(self):
