@@ -6,31 +6,31 @@
     "coverUrl": "", 
     "chapters": [
         {
-            "content": "    这个项目的目的是为了生成符合 “大笨熊听书” App (https://apps.apple.com/us/app/Foolistening/id1546690894)需要格式化的 “Foolbear Listening Book Package” 而提供的 python 示例。您也可以使用其他语言和工具，只要生成“Foolbear Listening Book Package”即可。",
+            "content": "这个项目的目的是为了生成符合 “大笨熊听书” App (https://apps.apple.com/us/app/Foolistening/id1546690894)需要格式化的 “Foolbear Listening Book Package” 而提供的 python 示例。您也可以使用其他语言和工具，只要生成“Foolbear Listening Book Package”即可。",
             "index": 0, 
             "sourceUrl": "https://github.com/foolbear/ListeningBookCrawler#%E7%9B%AE%E7%9A%84", 
             "name": "目的"
         }, 
         {
-            "content": "    这个格式是一个 Json 文件，其后缀是 “.flbp” 。该文件可以通过类似 AirDrop 等方法导入到 “大笨熊听书” App 中，即可听书。\n\n    其格式如示例: https://github.com/foolbear/ListeningBookCrawler/blob/main/杨小邪发威.flbp",
+            "content": "这个格式是一个 Json 文件，其后缀是 “.flbp” 。该文件可以通过类似 AirDrop 等方法导入到 “大笨熊听书” App 中，即可听书。\n\n其格式如示例: https://github.com/foolbear/ListeningBookCrawler/blob/main/杨小邪发威.flbp",
             "index": 1, 
             "sourceUrl": "https://github.com/foolbear/ListeningBookCrawler#foolbear-listening-book-package", 
             "name": "Foolbear Listening Book Package"
         }, 
         {
-            "content": "    数据源\n这个项目接受两种数据源，一种是来自各大追书网站，一种是来自文本文件。\n\n    使用前\n安装 python，安装相关模块：getopt、user_agent、json。", 
+            "content": "数据源\n这个项目接受两种数据源，一种是来自各大追书网站，一种是来自文本文件。\n\n使用前\n安装 python，安装相关模块：getopt、user_agent、json。", 
             "index": 2, 
             "sourceUrl": "https://github.com/foolbear/ListeningBookCrawler#%E6%95%B0%E6%8D%AE%E6%BA%90", 
             "name": "使用方法"
         }, 
         {
-            "content": "    对于各大追书网站，这里提供了两个示例：\n*BookCrawlerBQG.py: 笔趣阁（https://m.biqubu.com/）\n*BookCrawlerYQHY.py: 言情花园（https://k.yqhy.org）\n\n使用方法是：\nFoolMBP:~ foolbear$ python ~/Listening/Script/BookCrawlerBQG.py --help\nFoolMBP:~ foolbear$ python ~/Listening/Script/BookCrawlerBQG.py -u https://m.biqubu.com/book_202/ -o ~/Downloads/ -m 3\n\n*对于这两个网站，基本上可以直接使用即可。您也可以根据具体书籍格式（空行数不同，段首空格不同）做些微调。\n*对于其他追书网站，也可以在这两个示例的基础上修改，这可能需要您稍微了解下 python 的编程（很简单，我也是现学的，可能够用不够好）。", 
+            "content": "对于各大追书网站，这里提供了两个示例：\n*BookCrawlerBQG.py: 笔趣阁（https://m.biqubu.com/）\n*BookCrawlerYQHY.py: 言情花园（https://k.yqhy.org）\n\n使用方法是：\nFoolMBP:~ foolbear$ python ~/Listening/Script/BookCrawlerBQG.py --help\nFoolMBP:~ foolbear$ python ~/Listening/Script/BookCrawlerBQG.py -u https://m.biqubu.com/book_202/ -o ~/Downloads/ -m 3\n\n*对于这两个网站，基本上可以直接使用即可。您也可以根据具体书籍格式（空行数不同，段首空格不同）做些微调。\n*对于其他追书网站，也可以在这两个示例的基础上修改，这可能需要您稍微了解下 python 的编程（很简单，我也是现学的，可能够用不够好）。", 
             "index": 3, 
             "sourceUrl": "https://github.com/foolbear/ListeningBookCrawler#%E8%BF%BD%E4%B9%A6%E7%BD%91%E7%AB%99", 
             "name": "追书网站"
         }, 
         {
-            "content": "    对于文本文件，这里提供了一个示例：\n*BookCrawlerText.py\n\n使用方法是：\nFoolMBP:~ foolbear$ python ~/Listening/Script/BookCrawlerText.py --help\nFoolMBP:~ foolbear$ python ~/Listening/Script/BookCrawlerText.py -i ~/Downloads/杨小邪发威.txt -o ~/Downloads/ -m 3\n\n它所支持的格式如示例: https://github.com/foolbear/ListeningBookCrawler/blob/main/杨小邪发威.txt\n\n为了使用简单，请注意：\n*第一行书名，第二行作者。一定填充内容，就算不知道，请注为“-”。\n*章节名前添加一行空行。\n*章节名前没有空格。\n*章节内容的每行前添加四个空格。\n\n使用前还有几点注意：\n*为了编码（utf-8）正确，简单的方法是：将文本文件用 Chrome 浏览器打开，并拷贝其中的内容回文本文件并保存。\n*为了符合上面的格式，推荐使用类似 Sublime Text 等工具进行格式化，善用 replace 就能完成很多的工作。", 
+            "content": "对于文本文件，这里提供了一个示例：\n*BookCrawlerText.py\n\n使用方法是：\nFoolMBP:~ foolbear$ python ~/Listening/Script/BookCrawlerText.py --help\nFoolMBP:~ foolbear$ python ~/Listening/Script/BookCrawlerText.py -i ~/Downloads/杨小邪发威.txt -o ~/Downloads/ -m 3\n\n它所支持的格式如示例: https://github.com/foolbear/ListeningBookCrawler/blob/main/杨小邪发威.txt\n\n为了使用简单，请注意：\n*第一行书名，第二行作者。一定填充内容，就算不知道，请注为“-”。\n*章节名前添加一行空行。\n*章节名前没有空格。\n*章节内容的每行前添加四个空格。\n\n使用前还有几点注意：\n*为了编码（utf-8）正确，简单的方法是：将文本文件用 Chrome 浏览器打开，并拷贝其中的内容回文本文件并保存。\n*为了符合上面的格式，推荐使用类似 Sublime Text 等工具进行格式化，善用 replace 就能完成很多的工作。", 
             "index": 4, 
             "sourceUrl": "https://github.com/foolbear/ListeningBookCrawler#%E8%BF%BD%E4%B9%A6%E7%BD%91%E7%AB%99", 
             "name": "文本文件"
