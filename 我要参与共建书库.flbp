@@ -12,7 +12,7 @@
             "name": "目的"
         }, 
         {
-            "content": "    这个格式是一个 Json 文件，其后缀是 “.flbp” 。该文件可以通过类似 AirDrop 等方法导入到 “大笨熊听书” App中，即可听书。\n\n    其格式如示例: https://github.com/foolbear/ListeningBookCrawler/blob/main/杨小邪发威.flbp",
+            "content": "    这个格式是一个 Json 文件，其后缀是 “.flbp” 。该文件可以通过类似 AirDrop 等方法导入到 “大笨熊听书” App 中，即可听书。\n\n    其格式如示例: https://github.com/foolbear/ListeningBookCrawler/blob/main/杨小邪发威.flbp",
             "index": 1, 
             "sourceUrl": "https://github.com/foolbear/ListeningBookCrawler#foolbear-listening-book-package", 
             "name": "Foolbear Listening Book Package"
