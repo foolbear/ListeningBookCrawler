@@ -50,7 +50,7 @@ def getBook(param):
     
     chapterIndex = 0
     page_url = param.bookUrl
-    while page_url != '' and param.start + chapterIndex < param.maxChapters:
+    while page_url != '' and chapterIndex < param.start + param.maxChapters:
         print('page: ' + page_url)
         req = request(url = page_url)
         soup = BeautifulSoup(req.text, 'html.parser')
