@@ -4,7 +4,7 @@
 这个项目的目的是为了生成符合[ **“大笨熊听书”**  App](https://apps.apple.com/us/app/Foolistening/id1546690894) 需要格式化的 **“Foolbear Listening Book Package”** 而提供的 python 示例。您也可以使用其他语言和工具，只要生成“Foolbear Listening Book Package”即可。
 
 ## Foolbear Listening Book Package
-这个格式是一个 Json 文件，其后缀是 **“.flbp”** 。该文件可以通过类似 AirDrop 等方法导入到 **“大笨熊听书”**  App中，即可听书。
+这个格式是一个 Json 文件，其后缀是 **“.flbp”** 。该文件可以通过类似 AirDrop 等方法导入到 **“大笨熊听书”**  App 中，即可听书。
 其格式如下（[示例](https://github.com/foolbear/ListeningBookCrawler/blob/main/%E6%9D%A8%E5%B0%8F%E9%82%AA%E5%8F%91%E5%A8%81.flbp)）：  
 ```json
 {
