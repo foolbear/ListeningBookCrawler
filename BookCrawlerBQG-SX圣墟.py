@@ -15,6 +15,7 @@ def getChapter(url, index):
     soup = BeautifulSoup(req.text.replace('<br>', '\n').replace('\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t', ''), 'html.parser')
     title = soup.find_all('div', class_ = 'nr_title')[0].text.strip()
     content = soup.find(id = 'nr1').text.strip()
+    content = content.replace('/p>', '').strip()
     lines = map(lambda x: x.strip(), content.split('\n'))
     lines = filter(lambda x: x != '', lines)
     content = prefixOfContentLine + (separatorBetweenLines + prefixOfContentLine).join(lines)
