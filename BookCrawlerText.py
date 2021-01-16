@@ -27,7 +27,7 @@ def getBook(param):
     chapterIndex = 0
     line = ifile.readline()
     while line and chapterIndex < param.maxChapters:
-        if line.strip() != '' and line.startsWith('  ') == False:
+        if line.strip() != '' and line.startswith('  ') == False:
             chapter = Chapter()
             chapter.sourceUrl = ''
             chapter.name = line.strip()
@@ -37,7 +37,7 @@ def getBook(param):
             
             content = ''
             line = ifile.readline()
-            while line and (line.strip() == '' or line.startsWith('  ') == True):
+            while line and (line.strip() == '' or line.startswith('  ') == True or line.startswith('\t') == True):
                 if line.strip() != '':
                     content += prefixOfContentLine + line.strip() + separatorBetweenLines
                 line = ifile.readline()
@@ -80,8 +80,8 @@ def parseCommandLine(defaultParam):
 
 def write2FLBP(book, param):
     path = param.outputPath + book.name + postfixOfFLBP
-    file = open(path, 'w')
-    json.dump(obj = book, fp = file, encoding = 'UTF-8', ensure_ascii = False, default = lambda x : x.__dict__, sort_keys = False, indent = 4)
+    with open(path, 'w') as file:
+        json.dump(obj = book, fp = file, encoding = 'UTF-8', ensure_ascii = False, default = lambda x : x.__dict__, sort_keys = False, indent = 4)
     print('write2FLBP success, output file: %s' %(path))
     
 if __name__ == '__main__':

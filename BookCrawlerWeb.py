@@ -44,8 +44,8 @@ def parseCommandLine(defaultParam):
     
 def write2FLBP(book, param):
     path = param.outputPath + book.name + '_s' + str(param.start) + '_m' + str(param.maxChapters) + postfixOfFLBP
-    file = open(path, 'w')
-    json.dump(obj = book, fp = file, encoding = 'UTF-8', ensure_ascii = False, default = lambda x : x.__dict__, sort_keys = False, indent = 4)
+    with open(path, 'w') as file:
+        json.dump(obj = book, fp = file, encoding = 'UTF-8', ensure_ascii = False, default = lambda x : x.__dict__, sort_keys = False, indent = 4)
     print('write2FLBP success, output file: %s' %(path))
 
 def request(url):
