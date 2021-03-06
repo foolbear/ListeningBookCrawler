@@ -13,10 +13,9 @@ sys.setdefaultencoding('utf8')
 def getChapter(url, index):
     req = request(url = url)
     req.encoding = req.apparent_encoding
-    soup = BeautifulSoup(req.text.replace('<br>', '\n').replace('\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t', ''), 'html.parser')
-    title = soup.find_all('div', class_ = 'nr_title')[0].text.strip()
-    content = soup.find(id = 'nr1').text.strip()
-    content = content.replace('/p>', '').strip()
+    soup = BeautifulSoup(req.text.replace('<br>', '\n'), 'html.parser')
+    title = soup.find_all('h1', class_ = 'pt10')[0].text.strip()
+    content = soup.find_all('div', class_ = 'readcontent')[0].text.strip()
     lines = map(lambda x: x.strip(), content.split('\n'))
     lines = filter(lambda x: x != '', lines)
     content = prefixOfContentLine + (separatorBetweenLines + prefixOfContentLine).join(lines)
@@ -32,14 +31,15 @@ def getChapter(url, index):
 
 def getBook(param):
     req = request(url = param.bookUrl)
+    req.encoding = req.apparent_encoding
     soup = BeautifulSoup(req.text, 'html.parser')
-    block_txt = soup.find_all('div', class_ = 'block_txt2')[0]
-    title = block_txt.h2.string
-    author = block_txt.find_all('p')[1].string.replace('作者：', '')
-    update = block_txt.find_all('p')[4].string[3:13]
-    cover = soup.find_all('div', class_ = 'block_img2')[0].img['src']
-    introduction = soup.find_all('div', class_ = 'intro_info')[0].string
-        
+    title = soup.find_all('h1', class_ = 'booktitle')[0].string
+    booktag = soup.find_all('p', class_ = 'booktag')[0]
+    author = booktag.find_all('a', class_ = 'red')[0].string
+    update = soup.find_all('p', class_ = 'booktime')[0].string[5:15]
+    cover = soup.find_all('img', class_ = 'thumbnail pull-left visible-xs')[0]['src']
+    introduction = prefixOfContentLine + soup.find_all('p', class_ = 'bookintro')[0].text.strip()
+
     book = Book()
     book.sourceName = param.sourceName
     book.sourceUrl = param.bookUrl
@@ -56,32 +56,32 @@ def getBook(param):
         print('page: ' + page_url)
         req = request(url = page_url)
         soup = BeautifulSoup(req.text, 'html.parser')
-        chapters = soup.find_all('ul', class_ = 'chapter')[1]
-        for chapter in chapters.find_all('li'):
+        chapters = soup.find(id = 'list-chapterAll')
+        for chapter in chapters.find_all('dd'):
             if chapterIndex >= param.start + param.maxChapters:
                 break
             if chapterIndex < param.start:
                 chapterIndex += 1
                 continue
-            chapter_url = param.baseUrl + chapter.a['href']
+            chapter_url = chapter.a['href']
             chapter = getChapter(chapter_url, chapterIndex)
             book.chapters.append(chapter)
             chapterIndex += 1
-        next_page = soup.find_all('span', class_ = 'right')[0]
-        if next_page.a.has_attr('href'):
-            page_url = param.baseUrl + next_page.a['href']
+        next_page = soup.find_all('a', class_ = 'next')
+        if next_page:
+            page_url = next_page[0]['href']
         else:
             page_url = ''
     return book
     
 if __name__ == '__main__':
     param = Param()
-    param.bookUrl = 'https://m.biqubu.com/book_24/'
+    param.bookUrl = 'http://www.youkand.com/index/635/'
     param.outputpath = './'
     param.start = 0
     param.maxChapters = 2000000
-    param.sourceName = '笔趣阁'
-    param.baseUrl = 'https://m.biqubu.com'
+    param.sourceName = '九库全书'
+    param.baseUrl = 'http://www.youkand.com'
     
     param = parseCommandLine(param)
     book = getBook(param)

@@ -12,6 +12,7 @@ sys.setdefaultencoding('utf8')
 
 def getChapter(url, index):
     req = request(url = url)
+    req.encoding = req.apparent_encoding
     soup = BeautifulSoup(req.text.replace('<br>', '\n').replace('\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t', ''), 'html.parser')
     title = soup.find_all('div', class_ = 'nr_title')[0].text.strip()
     content = soup.find(id = 'nr1').text.strip()
