@@ -4,7 +4,7 @@ import os
 import sys
 from bs4 import BeautifulSoup
 
-from BookCrawlerDefine import Book, Chapter, prefixOfContentLine, separatorBetweenLines
+from BookCrawlerDefine import formatContent, Book, Chapter, prefixOfContentLine, separatorBetweenLines
 from BookCrawlerWeb import Param, parseCommandLine, request, write2FLBP
 
 reload(sys)
@@ -49,7 +49,8 @@ def getBook(param):
     author = soup.find_all('div', class_ = 'col-md-4 col-sm-6 dark')[0].string[4:]
     update = soup.find_all('h3', class_ = 'panel-title')[0].string[10:20]
     cover = param.baseUrl + soup.find_all('img', class_ = 'book-img-middel')[0]['src']
-    introduction = prefixOfContentLine + soup.find_all('div', class_ = 'book-detail')[0].string.strip()
+    introduction = soup.find_all('div', class_ = 'book-detail')[0].string
+    introduction = formatContent(introduction)
 
     book = Book()
     book.sourceName = param.sourceName

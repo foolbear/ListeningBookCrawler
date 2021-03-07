@@ -4,7 +4,7 @@ import os
 import sys
 from bs4 import BeautifulSoup
 
-from BookCrawlerDefine import Book, Chapter, prefixOfContentLine, separatorBetweenLines
+from BookCrawlerDefine import formatContent, Book, Chapter
 from BookCrawlerWeb import Param, parseCommandLine, request, write2FLBP
 
 reload(sys)
@@ -17,9 +17,7 @@ def getChapter(url, index, param):
     title = soup.find_all('div', class_ = 'nr_title')[0].text.strip()
     content = soup.find_all('div', class_ = 'nr_nr')[0].text.strip().replace('    ', '\n\n')
     content = content[:content.find('-->>')]
-    lines = map(lambda x: x.strip(), content.split('\n'))
-    lines = filter(lambda x: x != '', lines)
-    content = prefixOfContentLine + (separatorBetweenLines + prefixOfContentLine).join(lines)
+    content = formatContent(content)
     
     chapters = []
     chapter = Chapter()
@@ -50,6 +48,7 @@ def getBook(param):
     update = list(block_txt.children)[7].string[5:15]
     cover = soup.find_all('div', class_ = 'block_img')[0].img['src']
     introduction = soup.find_all('div', class_ = 'intro')[0].string
+    introduction = formatContent(introduction)
 
     book = Book()
     book.sourceName = param.sourceName
@@ -88,12 +87,12 @@ def getBook(param):
     
 if __name__ == '__main__':
     param = Param()
-    param.bookUrl = 'https://k.yqhy.org/read/1/1302/'
+    param.bookUrl = 'https://m.yqhyy.com/read/1/1302/'
     param.outputpath = './'
     param.start = 0
     param.maxChapters = 2000000
     param.sourceName = '言情花园'
-    param.baseUrl = 'https://k.yqhy.org'
+    param.baseUrl = 'https://m.yqhyy.com'
     
     param = parseCommandLine(param)
     book = getBook(param)

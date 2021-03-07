@@ -5,6 +5,11 @@ postfixOfFLBP = '.flbp'
 prefixOfContentLine = '        '
 separatorBetweenLines = '\n\n'
 
+def formatContent(content):
+    lines = map(lambda x: x.strip(), content.strip().split('\n'))
+    lines = filter(lambda x: x != '', lines)
+    return prefixOfContentLine + (separatorBetweenLines + prefixOfContentLine).join(lines)
+
 class Book:
     def __init__(self):
         self.author = ''

@@ -4,7 +4,7 @@ import os
 import sys
 from bs4 import BeautifulSoup
 
-from BookCrawlerDefine import Book, Chapter, prefixOfContentLine, separatorBetweenLines
+from BookCrawlerDefine import formatContent, Book, Chapter
 from BookCrawlerWeb import Param, parseCommandLine, request, write2FLBP
 
 reload(sys)
@@ -15,10 +15,8 @@ def getChapter(url, index):
     req.encoding = req.apparent_encoding
     soup = BeautifulSoup(req.text.replace('<br>', '\n'), 'html.parser')
     title = soup.find_all('h1', class_ = 'pt10')[0].text.strip()
-    content = soup.find_all('div', class_ = 'readcontent')[0].text.strip()
-    lines = map(lambda x: x.strip(), content.split('\n'))
-    lines = filter(lambda x: x != '', lines)
-    content = prefixOfContentLine + (separatorBetweenLines + prefixOfContentLine).join(lines)
+    content = soup.find_all('div', class_ = 'readcontent')[0].text
+    content = formatContent(content)
     
     chapter = Chapter()
     chapter.sourceUrl = url
@@ -38,7 +36,8 @@ def getBook(param):
     author = booktag.find_all('a', class_ = 'red')[0].string
     update = soup.find_all('p', class_ = 'booktime')[0].string[5:15]
     cover = soup.find_all('img', class_ = 'thumbnail pull-left visible-xs')[0]['src']
-    introduction = prefixOfContentLine + soup.find_all('p', class_ = 'bookintro')[0].text.strip()
+    introduction = soup.find_all('p', class_ = 'bookintro')[0].text
+    introduction = formatContent(introduction)
 
     book = Book()
     book.sourceName = param.sourceName
