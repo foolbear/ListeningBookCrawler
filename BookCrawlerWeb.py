@@ -53,7 +53,7 @@ def request(url):
     referrer = 'http://shurufa.baidu.com/dict.html'
     headers = {'User-Agent': userAgent, 'Referer': referrer}
     try:
-        response = requests.get(url, timeout = request_timeout, headers = headers)
+        response = requests.get(url, timeout = request_timeout, headers = headers, verify = False)
         if response.status_code == 200:
             return response
         else:
