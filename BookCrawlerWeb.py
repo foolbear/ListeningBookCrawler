@@ -6,6 +6,7 @@ import getopt
 import requests
 from user_agent import generate_user_agent
 from BookCrawlerDefine import postfixOfFLBP
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
         
 request_timeout = 60
 
@@ -53,6 +54,7 @@ def request(url):
     referrer = 'http://shurufa.baidu.com/dict.html'
     headers = {'User-Agent': userAgent, 'Referer': referrer}
     try:
+        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
         response = requests.get(url, timeout = request_timeout, headers = headers, verify = False)
         if response.status_code == 200:
             return response
