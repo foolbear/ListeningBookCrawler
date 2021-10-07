@@ -75,13 +75,12 @@ def getBook(param):
     
 if __name__ == '__main__':
     param = Param()
-    # param.bookUrl = 'https://m.biqubu.com/book_20602/'
-    param.bookUrl = 'https://m.81book.com/book/34711/'
+    param.bookUrl = 'https://m.biqubu.com/book_20602/'
     param.outputpath = './'
     param.start = 0
     param.maxChapters = 2000000
     param.sourceName = '笔趣阁'
-    param.baseUrl = 'https://m.81book.com/'
+    param.baseUrl = 'https://m.biqubu.com'
     
     param = parseCommandLine(param)
     book = getBook(param)
