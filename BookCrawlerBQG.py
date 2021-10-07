@@ -16,6 +16,7 @@ def getChapter(url, index):
     soup = BeautifulSoup(req.text.replace('<br>', '\n').replace('\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t', ''), 'html.parser')
     title = soup.find_all('div', class_ = 'nr_title')[0].text.strip()
     content = soup.find(id = 'nr1').text.replace('/p>', '')
+#    content = soup.find(id = 'nr1').text.replace(u'\xa0\xa0\xa0\xa0', '\n')
     content = formatContent(content)
     
     chapter = Chapter()
@@ -74,12 +75,13 @@ def getBook(param):
     
 if __name__ == '__main__':
     param = Param()
-    param.bookUrl = 'https://m.biqubu.com/book_20602/'
+    # param.bookUrl = 'https://m.biqubu.com/book_20602/'
+    param.bookUrl = 'https://m.81book.com/book/34711/'
     param.outputpath = './'
     param.start = 0
     param.maxChapters = 2000000
     param.sourceName = '笔趣阁'
-    param.baseUrl = 'https://m.biqubu.com'
+    param.baseUrl = 'https://m.81book.com/'
     
     param = parseCommandLine(param)
     book = getBook(param)
