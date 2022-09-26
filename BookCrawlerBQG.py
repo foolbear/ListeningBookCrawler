@@ -20,7 +20,7 @@ def getChapter(url, index):
     chapter.sourceUrl = url
     chapter.name = title
     chapter.content = content
-    chapter.index = index
+    chapter.index = index + param.reindex
     chapter.size = len(content)
     print('\tchapter %04d: %s' %(chapter.index, title.strip()))
     return chapter
@@ -52,7 +52,7 @@ def getBook(param):
         print('page: ' + page_url)
         req = request(url = page_url)
         soup = BeautifulSoup(req.text, 'html.parser')
-        chapters = soup.find_all('ul', class_ = 'chapter')[1]
+        chapters = soup.find_all('ul', class_ = 'chapter')[0]
         for chapter in chapters.find_all('li'):
             if chapterIndex >= param.start + param.maxChapters:
                 break
@@ -66,6 +66,8 @@ def getBook(param):
         next_page = soup.find_all('span', class_ = 'right')[0]
         if next_page.a.has_attr('href'):
             page_url = param.baseUrl + next_page.a['href']
+            if page_url.find('.html') == -1:
+                page_url = ''
         else:
             page_url = ''
     return book

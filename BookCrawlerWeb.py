@@ -18,13 +18,14 @@ class Param:
         self.maxChapters = 2000000
         self.sourceName = ''
         self.baseUrl = ''
+        self.reindex = 0
 
 def parseCommandLine(defaultParam):
     param = defaultParam
-    usage = 'Usage: %s -u <url> -o <outputpath> -s <start> -m <maxchapters>' %(sys.argv[0])
+    usage = 'Usage: %s -u <url> -o <outputpath> -s <start> -m <maxchapters> -r <reindex>' %(sys.argv[0])
     
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'hu:o:s:m:', ['help', 'url=', 'opath=', 'start=', 'max='])
+        opts, args = getopt.getopt(sys.argv[1:], 'hu:o:s:m:r:', ['help', 'url=', 'opath=', 'start=', 'max=', 'reindex'])
     except getopt.GetoptError:
         print(usage)
         sys.exit(2)
@@ -40,6 +41,8 @@ def parseCommandLine(defaultParam):
             param.start = int(value)
         elif key in ('-m', '--max'):
             param.maxChapters = int(value)
+        elif key in ('-r', '--reindex'):
+            param.reindex = int(value)
     print('request book from %s(%s), outputPath=%s, start=%d, maxChapters=%d' %(param.sourceName, param.bookUrl, param.outputPath, param.start, param.maxChapters))
     return param
     
