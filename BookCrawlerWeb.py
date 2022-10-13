@@ -43,6 +43,9 @@ def parseCommandLine(defaultParam):
             param.maxChapters = int(value)
         elif key in ('-r', '--reindex'):
             param.reindex = int(value)
+    if False == param.outputPath.endswith('/'):
+        param.outputPath += '/'
+        
     print('request book from %s(%s), outputPath=%s, start=%d, maxChapters=%d' %(param.sourceName, param.bookUrl, param.outputPath, param.start, param.maxChapters))
     return param
     
