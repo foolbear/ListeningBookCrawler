@@ -12,7 +12,7 @@ def getChapter(url, index):
     req.encoding = req.apparent_encoding
     soup = BeautifulSoup(req.text, 'html.parser')
     title = soup.find_all('div', class_ = 'chapter')[0].text.strip()
-    paragraphs = soup.find_all('div', class_ = 'fiction')[0].find_all('p')
+    paragraphs = soup.find_all('div', class_ = 'fiction-content')[0].find_all('p')
     content = ''
     for paragraph in paragraphs:
         content += paragraph.text + '\n'
