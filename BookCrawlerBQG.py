@@ -52,7 +52,9 @@ def getBook(param):
         print('page: ' + page_url)
         req = request(url = page_url)
         soup = BeautifulSoup(req.text, 'html.parser')
-        chapters = soup.find_all('ul', class_ = 'chapter')[0]
+
+        isFirstPage = page_url.endswith('_1.html') or page_url.endswith('/')
+        chapters = soup.find_all('ul', class_ = 'chapter')[1 if isFirstPage else 0]
         for chapter in chapters.find_all('li'):
             if chapterIndex >= param.start + param.maxChapters:
                 break
