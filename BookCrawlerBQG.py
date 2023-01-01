@@ -31,8 +31,7 @@ def getPageContent(url, chapter):
         title = soup.find_all('div', class_ = 'nr_title')[0].text.strip()
         chapter.name = title
 
-    content = soup.find(id = 'nr1').text.replace('/p>', '')
-#    content = soup.find(id = 'nr1').text.replace(u'\xa0\xa0\xa0\xa0', '\n')
+    content = soup.find(id = 'nr1').text.replace('/p>', '').replace('ßĨQÚbu.ČŐM', '').replace('毣趣阅', '')
     content = formatContent(content)
     if chapter.content != '':
         content = content.lstrip()
@@ -58,7 +57,7 @@ def getBook(param):
     book.sourceName = param.sourceName
     book.sourceUrl = param.bookUrl
     book.author = author
-    book.coverUrl = cover
+    book.coverUrl = param.baseUrl + cover
     book.introduction = introduction
     book.name = title
     book.sourceUpdateAt = update
@@ -80,7 +79,13 @@ def getBook(param):
                 chapterIndex += 1
                 continue
             chapter_url = param.baseUrl + chapter.a['href']
-            chapter = getChapter(chapter_url, chapterIndex)
+            
+            try:
+                chapter = getChapter(chapter_url, chapterIndex)
+            except BaseException as error:
+                print("getChapter exception at chapterIndex: " + str(chapterIndex) + ", for error: " + repr(error))
+                return book
+
             book.chapters.append(chapter)
             chapterIndex += 1
         next_page = soup.find_all('span', class_ = 'right')[0]
