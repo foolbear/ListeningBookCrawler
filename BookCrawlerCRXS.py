@@ -16,7 +16,7 @@ def getChapter(url, index):
     content = ''
     for paragraph in paragraphs:
         content += paragraph.text + '\n'
-    content = formatContent(content)
+    content = formatContent(content.replace("\n        请点击这里继续阅读本文", "")).replace("（看精彩成人小说上《成人小说网》：https://crxs.me）", "")
     
     chapter = Chapter()
     chapter.sourceUrl = url
@@ -32,15 +32,16 @@ def getBook(param):
     req.encoding = req.apparent_encoding
     soup = BeautifulSoup(req.text, 'html.parser')
     title = soup.find_all('div', class_ = 'title')[0].string.strip()
-    coverUrl = param.baseUrl + soup.find_all('img', class_ = 'cover')[0]['src']
+    # coverUrl = param.baseUrl + soup.find_all('img', class_ = 'cover')[0]['src']
+    author = soup.find_all('div', class_ = 'author')[0].a.string.strip()
     introduction= soup.find_all('div', class_ = 'brief')[0].string[3:]
     introduction = formatContent(introduction)
         
     book = Book()
     book.sourceName = param.sourceName
     book.sourceUrl = param.bookUrl
-    book.author = '佚名'
-    book.coverUrl = coverUrl
+    book.author = author
+    # book.coverUrl = coverUrl
     book.introduction = introduction
     book.name = title
     book.sourceUpdateAt = ''

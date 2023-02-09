@@ -72,13 +72,15 @@ def parseCommandLine(defaultParam):
             param.outputPath = value
         elif key in ('-m', '--max'):
             param.maxChapters = int(value)
+    if False == param.outputPath.endswith('/'):
+        param.outputPath += '/'
     print('read book from %s, outputPath=%s, maxChapters=%d' %(param.inputFile, param.outputPath, param.maxChapters))
     return param
 
 def write2FLBP(book, param):
     path = param.outputPath + book.name + '_m' + str(param.maxChapters) + postfixOfFLBP
     with open(path, 'w') as file:
-        json.dump(obj = book, fp = file, encoding = 'UTF-8', ensure_ascii = False, default = lambda x : x.__dict__, sort_keys = False, indent = 4)
+        json.dump(obj = book, fp = file, ensure_ascii = False, default = lambda x : x.__dict__, sort_keys = False, indent = 4)
     print('write2FLBP success, output file: %s' %(path))
     
 if __name__ == '__main__':
