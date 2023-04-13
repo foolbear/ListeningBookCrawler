@@ -26,7 +26,7 @@ def getBook(param):
     while line and chapterIndex < param.maxChapters:
         if line.strip() != '' and line.startswith('  ') == False:
             chapter = Chapter()
-            chapter.sourceUrl = ''
+            chapter.url = ''
             chapter.name = line.strip()
             chapter.index = chapterIndex
             chapterIndex += 1

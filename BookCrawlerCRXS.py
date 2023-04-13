@@ -19,7 +19,7 @@ def getChapter(url, index):
     content = formatContent(content)
     
     chapter = Chapter()
-    chapter.sourceUrl = url
+    chapter.url = url
     chapter.name = title
     chapter.content = content
     chapter.index = index
