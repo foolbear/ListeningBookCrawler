@@ -40,7 +40,7 @@ def getBook(param):
     book.sourceName = param.sourceName
     book.sourceUrl = param.bookUrl
     book.author = author
-    book.coverUrl = cover
+    book.coverUrl = param.baseUrl + cover
     book.introduction = introduction
     book.name = title
     book.sourceUpdateAt = update
