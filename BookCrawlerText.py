@@ -7,9 +7,6 @@ import getopt
 
 from BookCrawlerDefine import Book, Chapter, postfixOfFLBP, prefixOfContentLine, separatorBetweenLines
 
-reload(sys)
-sys.setdefaultencoding('utf8')
-
 def getBook(param):
     book = Book()
     book.sourceName = param.sourceName

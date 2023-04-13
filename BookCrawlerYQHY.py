@@ -7,9 +7,6 @@ from bs4 import BeautifulSoup
 from BookCrawlerDefine import formatContent, Book, Chapter
 from BookCrawlerWeb import Param, parseCommandLine, request, write2FLBP
 
-reload(sys)
-sys.setdefaultencoding('utf8')
-
 def getChapter(url, index, param):
     req = request(url = url)
     req.encoding = req.apparent_encoding
