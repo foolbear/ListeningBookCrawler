@@ -18,6 +18,7 @@ def getChapter(url, index):
         if nextUrl == None:
             break
 
+    chapter.content = chapter.content.replace('&rdquo;', '"')
     chapter.size = len(chapter.content)
     print('\tchapter %04d: %s' %(chapter.index, chapter.name))
     return chapter
@@ -31,7 +32,7 @@ def getPageContent(url, chapter):
         title = soup.find_all('div', class_ = 'nr_title')[0].text.strip()
         chapter.name = title
 
-    content = soup.find(id = 'nr1').text.replace('/p>', '').replace('ßĨQÚbu.ČŐM', '').replace('毣趣阅', '')
+    content = soup.find(id = 'nr1').text.replace('/p>', '').replace('ŴŴŴ.ßĨQÚbu.ČŐM', '').replace('ßĨQÚbu.ČŐM', '').replace('biqubu.com', '').replace('毣趣阅', '')
     content = formatContent(content)
     if chapter.content != '':
         content = content.lstrip()
