@@ -2,20 +2,30 @@
 
 import os
 import sys
+import time
 from bs4 import BeautifulSoup
 
 from BookCrawlerDefine import formatContent, Book, Chapter
 from BookCrawlerWeb import Param, parseCommandLine, request, write2FLBP
 
 def getChapter(url, index):
-    req = request(url = url)
-    req.encoding = req.apparent_encoding
-    soup = BeautifulSoup(req.text, 'html.parser')
-    title = soup.find_all('div', class_ = 'chapter')[0].text.strip()
-    paragraphs = soup.find_all('div', class_ = 'fiction')[0].find_all('p')
     content = ''
-    for paragraph in paragraphs:
-        content += paragraph.text + '\n'
+    needRetry = True
+    retryTimes = 2
+    while needRetry and retryTimes > 0:
+        time.sleep(30)
+        req = request(url = url)
+        req.encoding = req.apparent_encoding
+        soup = BeautifulSoup(req.text, 'html.parser')
+        title = soup.find_all('div', class_ = 'chapter')[0].text.strip()
+        paragraphs = soup.find_all('div', class_ = 'fiction-content')[0].find_all('p')
+        
+        for paragraph in paragraphs:
+            content += paragraph.text + '\n'
+        content = content.replace("（看精彩成人小说上《成人小说网》：https://crxs.me）", "")
+
+        needRetry = content.find("请点击这里继续阅读本文") != -1
+        retryTimes -= 1
     content = formatContent(content)
     
     chapter = Chapter()
@@ -24,7 +34,7 @@ def getChapter(url, index):
     chapter.content = content
     chapter.index = index
     chapter.size = len(content)
-    print('\tchapter %04d: %s' %(chapter.index, title))
+    print('\tchapter %04d: %s, need retry: %d' %(chapter.index, title, needRetry))
     return chapter
 
 def getBook(param):
@@ -32,15 +42,16 @@ def getBook(param):
     req.encoding = req.apparent_encoding
     soup = BeautifulSoup(req.text, 'html.parser')
     title = soup.find_all('div', class_ = 'title')[0].string.strip()
-    coverUrl = param.baseUrl + soup.find_all('img', class_ = 'cover')[0]['src']
+    # coverUrl = param.baseUrl + soup.find_all('img', class_ = 'cover')[0]['src']
+    author = soup.find_all('div', class_ = 'author')[0].a.string.strip()
     introduction= soup.find_all('div', class_ = 'brief')[0].string[3:]
     introduction = formatContent(introduction)
         
     book = Book()
     book.sourceName = param.sourceName
     book.sourceUrl = param.bookUrl
-    book.author = '佚名'
-    book.coverUrl = coverUrl
+    book.author = author
+    # book.coverUrl = coverUrl
     book.introduction = introduction
     book.name = title
     book.sourceUpdateAt = ''
@@ -55,7 +66,13 @@ def getBook(param):
             chapterIndex += 1
             continue
         chapter_url = param.baseUrl + chapter.a['href']
-        chapter = getChapter(chapter_url, chapterIndex)
+        
+        try:
+            chapter = getChapter(chapter_url, chapterIndex)
+        except BaseException as error:
+            print("getChapter exception at chapterIndex: " + str(chapterIndex) + ", for error: " + repr(error))
+            return book
+
         book.chapters.append(chapter)
         chapterIndex += 1
     return book

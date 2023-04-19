@@ -59,7 +59,12 @@ def getBook(param):
         else:
             chapter_url = chapter.b['onclick'][13:][:-2]
             
-        chapter = getChapter(chapter_url, chapterIndex)
+        try:
+            chapter = getChapter(chapter_url, chapterIndex)
+        except BaseException as error:
+            print("getChapter exception at chapterIndex: " + str(chapterIndex) + ", for error: " + repr(error))
+            return book
+
         book.chapters.append(chapter)
         chapterIndex += 1
     return book

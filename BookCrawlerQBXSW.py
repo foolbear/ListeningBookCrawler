@@ -56,7 +56,13 @@ def getBook(param):
             chapterIndex += 1
             continue
         chapter_url = param.bookUrl + chapter.a['href']
-        chapter = getChapter(chapter_url, chapterIndex)
+        
+        try:
+            chapter = getChapter(chapter_url, chapterIndex)
+        except BaseException as error:
+            print("getChapter exception at chapterIndex: " + str(chapterIndex) + ", for error: " + repr(error))
+            return book
+
         book.chapters.append(chapter)
         chapterIndex += 1
     return book

@@ -71,7 +71,13 @@ def getBook(param):
                 chapterIndex += 1
                 continue
             chapter_url = param.baseUrl + chapter.a['href']
-            chapters = getChapter(chapter_url, chapterIndex, param)
+
+            try:
+                chapters = getChapter(chapter_url, chapterIndex, param)
+            except BaseException as error:
+                print("getChapter exception at chapterIndex: " + str(chapterIndex) + ", for error: " + repr(error))
+                return book
+
             book.chapters += chapters
             chapterIndex += len(chapters)
         navigators = soup.find_all('div', class_ = 'page')[0]

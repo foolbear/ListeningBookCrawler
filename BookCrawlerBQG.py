@@ -8,22 +8,39 @@ from BookCrawlerDefine import formatContent, Book, Chapter
 from BookCrawlerWeb import Param, parseCommandLine, request, write2FLBP
 
 def getChapter(url, index):
+    chapter = Chapter()
+    chapter.sourceUrl = url
+    chapter.index = index + param.reindex
+
+    nextUrl = url
+    while True:
+        nextUrl = getPageContent(nextUrl, chapter)
+        if nextUrl == None:
+            break
+
+    chapter.size = len(chapter.content)
+    print('\tchapter %04d: %s' %(chapter.index, chapter.name))
+    return chapter
+
+def getPageContent(url, chapter):
     req = request(url = url)
 #    req.encoding = req.apparent_encoding
     soup = BeautifulSoup(req.text.replace('<br>', '\n').replace('\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t', ''), 'html.parser')
-    title = soup.find_all('div', class_ = 'nr_title')[0].text.strip()
-    content = soup.find(id = 'nr1').text.replace('/p>', '')
-#    content = soup.find(id = 'nr1').text.replace(u'\xa0\xa0\xa0\xa0', '\n')
+
+    if chapter.name == '':
+        title = soup.find_all('div', class_ = 'nr_title')[0].text.strip()
+        chapter.name = title
+
+    content = soup.find(id = 'nr1').text.replace('/p>', '').replace('ßĨQÚbu.ČŐM', '').replace('毣趣阅', '')
     content = formatContent(content)
-    
-    chapter = Chapter()
-    chapter.url = url
-    chapter.name = title
-    chapter.content = content
-    chapter.index = index
-    chapter.size = len(content)
-    print('\tchapter %04d: %s' %(chapter.index, title.strip()))
-    return chapter
+    if chapter.content != '':
+        content = content.lstrip()
+    chapter.content += content
+
+    nextUrl = soup.find(id = 'pt_next')['href']
+    if '_' in nextUrl[nextUrl.rfind('/'):]:
+        return param.baseUrl + nextUrl
+    return None
 
 def getBook(param):
     req = request(url = param.bookUrl)
@@ -52,7 +69,8 @@ def getBook(param):
         print('page: ' + page_url)
         req = request(url = page_url)
         soup = BeautifulSoup(req.text, 'html.parser')
-        chapters = soup.find_all('ul', class_ = 'chapter')[1]
+
+        chapters = soup.find_all('ul', class_ = 'chapter')[-1]
         for chapter in chapters.find_all('li'):
             if chapterIndex >= param.start + param.maxChapters:
                 break
@@ -60,12 +78,20 @@ def getBook(param):
                 chapterIndex += 1
                 continue
             chapter_url = param.baseUrl + chapter.a['href']
-            chapter = getChapter(chapter_url, chapterIndex)
+            
+            try:
+                chapter = getChapter(chapter_url, chapterIndex)
+            except BaseException as error:
+                print("getChapter exception at chapterIndex: " + str(chapterIndex) + ", for error: " + repr(error))
+                return book
+
             book.chapters.append(chapter)
             chapterIndex += 1
         next_page = soup.find_all('span', class_ = 'right')[0]
         if next_page.a.has_attr('href'):
             page_url = param.baseUrl + next_page.a['href']
+            if page_url.find('.html') == -1:
+                page_url = ''
         else:
             page_url = ''
     return book
