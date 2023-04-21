@@ -9,7 +9,7 @@ from BookCrawlerWeb import Param, parseCommandLine, request, write2FLBP
 
 def getChapter(url, index):
     chapter = Chapter()
-    chapter.sourceUrl = url
+    chapter.url = url
     chapter.index = index + param.reindex
 
     nextUrl = url
@@ -19,7 +19,7 @@ def getChapter(url, index):
             break
 
     chapter.content = chapter.content.replace('&ldquo;', '"').replace('&rdquo;', '"').replace('ŴŴŴ.ßĨQÚbu.ČŐM', '').replace('ßĨQÚbu.ČŐM', '').replace('biqubu.com', '').replace('毣趣阅', '')
-    chapter.size = len(chapter.content)
+    chapter.words = len(chapter.content)
     print('\tchapter %04d: %s' %(chapter.index, chapter.name))
     return chapter
 

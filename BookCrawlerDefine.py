@@ -26,5 +26,5 @@ class Chapter:
         self.index = 0
         self.content = ''
         self.name = ''
-        self.sourceUrl = ''
-        self.size = 0
+        self.url = ''
+        self.words = 0
