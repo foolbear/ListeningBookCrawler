@@ -18,7 +18,7 @@ def getChapter(url, index):
         if nextUrl == None:
             break
 
-    chapter.content = chapter.content.replace('&ldquo;', '"').replace('&rdquo;', '"').replace('ŴŴŴ.ßĨQÚbu.ČŐM', '').replace('ßĨQÚbu.ČŐM', '').replace('biqubu.com', '').replace('毣趣阅', '')
+    chapter.content = chapter.content.replace('&ldquo;', '"').replace('&rdquo;', '"').replace('ŴŴŴ.ßĨQÚbu.ČŐM', '').replace('ßĨQÚbu.ČŐM', '').replace('biqubu.com', '').replace('毣趣阅', '').replace('&hellip;', '...')
     chapter.words = len(chapter.content)
     print('\tchapter %04d: %s' %(chapter.index, chapter.name))
     return chapter
