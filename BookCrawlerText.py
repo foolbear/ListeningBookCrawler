@@ -22,27 +22,48 @@ def getBook(param):
     print(book.name)
     
     chapterIndex = 0
+    chapterName = ''
+    chpaterContent = ''
     line = ifile.readline()
     while line and chapterIndex < param.maxChapters:
         if line.strip() != '' and line.startswith('  ') == False:
-            chapter = Chapter()
-            chapter.url = ''
-            chapter.name = line.strip()
-            chapter.index = chapterIndex
-            chapterIndex += 1
-            print('\tchapter %04d: %s' %(chapter.index, chapter.name))
-            
+            name = line.strip()
             content = ''
             line = ifile.readline()
             while line and (line.strip() == '' or line.startswith('  ') == True or line.startswith('\t') == True):
                 if line.strip() != '':
                     content += prefixOfContentLine + line.strip() + separatorBetweenLines
                 line = ifile.readline()
-            chapter.content = content
-            chapter.words = len(chapter.content)
-            book.chapters.append(chapter)
+                
+            if name == chapterName:
+                chapterContent += content
+            else:
+                if chapterName != '' and  chapterContent != '':
+                    chapter = Chapter()
+                    chapter.index = chapterIndex
+                    chapter.name = chapterName
+                    chapter.content = chapterContent
+                    chapter.words = len(chapter.content)
+                    chapter.url = ''
+                    book.chapters.append(chapter)
+                    print('\tchapter %04d: %s' %(chapter.index, chapter.name))
+                    chapterIndex += 1
+                chapterName = name
+                chapterContent = content
         else:
             line = ifile.readline()
+        
+    if chapterName != '' and  chapterContent != '':
+        chapter = Chapter()
+        chapter.index = chapterIndex
+        chapter.name = chapterName
+        chapter.content = chapterContent
+        chapter.words = len(chapter.content)
+        chapter.url = ''
+        book.chapters.append(chapter)
+        print('\tchapter %04d: %s' %(chapter.index, chapter.name))
+        chapterIndex += 1
+    
     ifile.close()
     return book
     
